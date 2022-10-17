@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapp/screens/home_screen.dart';
 import 'package:moviesapp/screens/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -12,7 +11,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
-  final auth = FirebaseAuth.instance;
+  //final auth = FirebaseAuth.instance;
   late String emailEditingController;
   late String passwordEditingController;
 
@@ -84,7 +83,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         minWidth: double.infinity,
         height: 60,
         onPressed: () {
-          signUp();
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const LoginScreen()));
+         // signUp();
           // FirebaseAuth.instance.createUserWithEmailAndPassword(
           //     email: emailEditingController,
           //     password: passwordEditingController);
@@ -196,37 +196,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Future signUp() async {
-    // log(email);
-    // log(password);
-    try {
-      final newUser = await auth.createUserWithEmailAndPassword(
-          email: emailEditingController, password: passwordEditingController);
-      if (newUser != null) {
-        // ignore: use_build_context_synchronously
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
-      }
-    } on FirebaseAuthException catch (e) {
-      print("#############");
-      print(e);
-      print("#############");
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text(e.code),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
-  }
+  // Future signUp() async {
+  //   // log(email);
+  //   // log(password);
+  //   try {
+  //     final newUser = await auth.createUserWithEmailAndPassword(
+  //         email: emailEditingController, password: passwordEditingController);
+  //     if (newUser != null) {
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.push(context,
+  //           MaterialPageRoute(builder: (context) => const HomeScreen()));
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     print("#############");
+  //     print(e);
+  //     print("#############");
+  //     showDialog<String>(
+  //       context: context,
+  //       builder: (BuildContext context) => AlertDialog(
+  //         title: Text(e.code),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () => Navigator.pop(context, 'Cancel'),
+  //             child: const Text('Cancel'),
+  //           ),
+  //           TextButton(
+  //             onPressed: () => Navigator.pop(context, 'OK'),
+  //             child: const Text('OK'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+  // }
 }

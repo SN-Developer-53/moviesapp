@@ -1,5 +1,5 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesapp/main.dart';
 import 'package:moviesapp/screens/home_screen.dart';
@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late String email;
   late String password;
-  final _auth = FirebaseAuth.instance;
+ // final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
         minWidth: double.infinity,
         height: 60,
         onPressed: () {
-          signIn();
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HomeScreen()));
+        //  signIn();
           final isValidForm = _formKey.currentState!.validate();
           if (isValidForm) {}
         },
@@ -193,43 +194,43 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future signIn() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const Center(
-              child: CircularProgressIndicator(),
-            ));
+  // Future signIn() async {
+  //   showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) => const Center(
+  //             child: CircularProgressIndicator(),
+  //           ));
 
-    try {
-      final newUser = await _auth.signInWithEmailAndPassword(
-          email: email.trim(), password: password.trim());
-      if (newUser != null) {
-        // ignore: use_build_context_synchronously
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
-      }
-    } on FirebaseException catch (e) {
-      print(e);
-      return showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                title: Text(e.code),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context, 'Cancel');
-                    },
-                    child: Text('Cancel'),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context, 'OK');
-                      },
-                      child: Text('OK'))
-                ],
-              ));
-    }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
-  }
+  //   try {
+  //     final newUser = await _auth.signInWithEmailAndPassword(
+  //         email: email.trim(), password: password.trim());
+  //     if (newUser != null) {
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.push(context,
+  //           MaterialPageRoute(builder: (context) => const HomeScreen()));
+  //     }
+  //   } on FirebaseException catch (e) {
+  //     print(e);
+  //     return showDialog<String>(
+  //         context: context,
+  //         builder: (BuildContext context) => AlertDialog(
+  //               title: Text(e.code),
+  //               actions: <Widget>[
+  //                 TextButton(
+  //                   onPressed: () {
+  //                     Navigator.pop(context, 'Cancel');
+  //                   },
+  //                   child: Text('Cancel'),
+  //                 ),
+  //                 TextButton(
+  //                     onPressed: () {
+  //                       Navigator.pop(context, 'OK');
+  //                     },
+  //                     child: Text('OK'))
+  //               ],
+  //             ));
+  //   }
+  //   navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  // }
 }
